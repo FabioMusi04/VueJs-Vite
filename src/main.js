@@ -1,14 +1,12 @@
 import './style.css'
-import { createApp, h } from 'vue/dist/vue.esm-bundler';
+import { createApp } from 'vue';
 import App from './App.vue'
 import {createRouter, createWebHashHistory} from 'vue-router'
 
-const Home = { template: '<p>Ciao</p>' }
-const About = { template: '<p>About</p>' }
-
 const routes = [
-  { path: '/', component: Home },
-  { path: '/about', component: About },
+  { path: '/', component: ()=> import('./views/Home.vue'), name:"home" },
+  { path: '/about', component: ()=> import('./views/About.vue'),name:"about"},
+  { path: '/contact', component: ()=> import('./views/Contact.vue'),name:"contact"},
 ]
 
 const router = createRouter({
@@ -16,11 +14,6 @@ const router = createRouter({
   routes, 
 })
 
-const app  = createApp({
-    render: ()=>h(App)
-});
-
-
+const app  = createApp(App)
 app.use(router)
-
 app.mount("#app")
